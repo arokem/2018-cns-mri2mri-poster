@@ -18,7 +18,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %-------------------------------------------------------------------------------
 
-\documentclass[a0, landscape]{a0poster}
+\documentclass[a0, portrait]{a0poster}
 
 \usepackage{multicol} % This is so we can have multiple columns of text side-by-side
 \columnsep=100pt % This is the amount of white space between the columns in the poster
@@ -52,7 +52,7 @@
 %\Huge\textit{An Exploration of Complexity}\\[1cm] % Subtitle
 \huge \textbf{Sa Xiao\textsuperscript{1}, Yue Wu\textsuperscript{1}, Aaron Lee\textsuperscript{1}, \& Ariel Rokem\textsuperscript{2}}\\ % Author(s)
 \Large 1. The Department of Ophthalmology, The University of Washington \\ 2. The eScience Institute, The University of Washington \\% University/organization
-\Large Contact: \texttt{arokem@uw.edu} $|$ Download: \texttt{http://arokem.github.io/2018-ncec-mri2mri-poster/poster.pdf}
+\Large Contact: \texttt{arokem@uw.edu} $|$ Download: \texttt{http://arokem.github.io/2018-cns-mri2mri-poster/poster.pdf}
 \end{minipage}
 %
 %\begin{minipage}[b]{0.25\linewidth}
@@ -72,7 +72,7 @@
 
 %----------------------------------------------------------------------------------------
 
-\begin{multicols}{3} % This is how many columns your poster will be broken into, a poster with many figures may benefit from less columns whereas a text-heavy poster benefits from more
+\begin{multicols}{2} % This is how many columns your poster will be broken into, a poster with many figures may benefit from less columns whereas a text-heavy poster benefits from more
 
 %----------------------------------------------------------------------------%	Introduction
 %----------------------------------------------------------------------------
@@ -104,10 +104,43 @@ We used the IXI dataset (\url{http://brain-development.org/ixi-dataset/}): T1w, 
 A group of participants (n=79), set aside as a test set (not shown to the algorithm during training) was used to evaluate registration. We used a state-of-the-art registration algorithm \cite{Avants2008-sa}, implemented in DIPY \cite{Garyfallidis2014-el} to register DWI b=0 to corresponding T1w images, using a mutual information metric to find the best affine transformation for registration. To simulate participant motion, known rotation and translation were applied to the b=0 image and the T1w was registered to the b=0. For comparison, we also synthesized a T1w-analog from the b=0 image using the DL network and used the synthesized image with the same registration algorithm. Registration errors were calculated relative to known ground truth as mean absolute error (MAE), for translation and rotation components of the registration.
 
 \begin{minipage}[b]{\linewidth}
-\includegraphics[width=\linewidth]{unet.png}
-\center U-Net architecture
+\includegraphics[width=\linewidth]{fully-convolutional.png}
+\center Fully convolutional neural network
 \end{minipage}
 \\
+
+
+\begin{minipage}[b]{\linewidth}
+\begin{minipage}[b]{0.45\linewidth}
+\includegraphics[width=\linewidth]{arch1.png}
+\center Architecture 1: U-Net
+\end{minipage}
+\vspace{0.05\linewidth}
+\begin{minipage}[b]{0.45\linewidth}
+\includegraphics[width=\linewidth]{arch2.png}
+\center Architecture 2: U-Net + GAN
+\end{minipage}
+\end{minipage}
+\\
+
+
+\begin{minipage}[b]{\linewidth}
+\includegraphics[width=\linewidth]{perceptual-loss.png}
+\center Perceptual loss
+\end{minipage}
+\\
+
+
+%----------------------------------------------------------------------------%	ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------
+\subsection*{Acknowledgements} \footnotesize This research was supported through
+a grant from the Gordon \& Betty Moore Foundation and the Alfred P. Sloan
+Foundation to the University of Washington eScience Institute.
+
+\includegraphics[height=2.6cm]{eSciencelogo.png}
+\includegraphics[height=2.6cm]{SloanLogo.png}
+\includegraphics[height=2.6cm]{MooreFdn.png}
+
 \columnbreak
 
 %----------------------------------------------------------------------------%	RESULTS
@@ -170,15 +203,6 @@ AI-synthesized retinal perfusion images in patients with diseases that were not 
 \bibliographystyle{plain} % Plain referencing style
 \footnotesize \bibliography{poster} % Use the example bibliography file sample.bib
 
-%----------------------------------------------------------------------------%	ACKNOWLEDGEMENTS
-%----------------------------------------------------------------------------
-\subsection*{Acknowledgements} \footnotesize This research was supported through
-a grant from the Gordon \& Betty Moore Foundation and the Alfred P. Sloan
-Foundation to the University of Washington eScience Institute.
-
-\includegraphics[height=2.6cm]{eSciencelogo.png}
-\includegraphics[height=2.6cm]{SloanLogo.png}
-\includegraphics[height=2.6cm]{MooreFdn.png}
 
 %----------------------------------------------------------------------------
 
