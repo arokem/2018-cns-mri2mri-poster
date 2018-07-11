@@ -136,14 +136,14 @@
 %%   	B: 18.1mm
 
 
-\voffset -1in
-\hoffset -1in
+\voffset 0in
+\hoffset 0in
 
 \setlength{\headheight}{0 cm}
 \setlength{\headsep}{0 cm}
-\setlength{\topmargin}{5 cm} %% 3 cm for unprintable at top
+\setlength{\topmargin}{3 cm} %% 3 cm for unprintable at top
 			     %% (landscape) + 2 cm from border
-\setlength{\oddsidemargin}{5 cm} %% 3 cm for unprintable at left
+\setlength{\oddsidemargin}{3 cm} %% 3 cm for unprintable at left
 			    	 %% (landscape) + 2 cm from border
 \setlength{\topskip}{0 cm}
 
@@ -153,9 +153,9 @@
 \renewcommand{\scriptsize}{\fontsize{14.4}{18}\selectfont}
 \renewcommand{\footnotesize}{\fontsize{17.28}{22}\selectfont}
 \renewcommand{\small}{\fontsize{20.74}{25}\selectfont}
-\renewcommand{\normalsize}{\fontsize{23.00}{29}\selectfont}
-\renewcommand{\large}{\fontsize{29.86}{37}\selectfont}
-\renewcommand{\Large}{\fontsize{35.83}{45}\selectfont}
+\renewcommand{\normalsize}{\fontsize{22.00}{29}\selectfont}
+\renewcommand{\large}{\fontsize{28}{34}\selectfont}
+\renewcommand{\Large}{\fontsize{34}{45}\selectfont}
 \renewcommand{\LARGE}{\fontsize{43}{54}\selectfont}
 \renewcommand{\huge}{\fontsize{48}{64}\selectfont}
 \renewcommand{\Huge}{\fontsize{61.92}{77}\selectfont}
@@ -164,14 +164,14 @@
 \newcommand{\VERYHuge}{\fontsize{107}{134}\selectfont}
 
 \setlength\smallskipamount{6pt plus 2pt minus 2pt}
-\setlength\medskipamount{12pt plus 4pt minus 4pt}
-\setlength\bigskipamount{24pt plus 8pt minus 8pt}
+\setlength\medskipamount{10pt plus 4pt minus 4pt}
+\setlength\bigskipamount{20pt plus 8pt minus 8pt}
 
-\setlength\abovecaptionskip{25pt}
+\setlength\abovecaptionskip{20pt}
 \setlength\belowcaptionskip{0pt}
-\setlength\abovedisplayskip{25pt plus 6pt minus 15 pt}
+\setlength\abovedisplayskip{20pt plus 6pt minus 15 pt}
 \setlength\abovedisplayshortskip{0pt plus 6pt}
-\setlength\belowdisplayshortskip{13pt plus 7pt minus 6pt}
+\setlength\belowdisplayshortskip{10pt plus 7pt minus 6pt}
 \setlength\belowdisplayskip\abovedisplayskip
 
 \normalsize

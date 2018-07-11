@@ -79,18 +79,16 @@
 
 \section*{Introduction}
 
-MRI creates images that are sensitive to different aspects of the tissue, and
-susceptible to different imaging artifacts. The relationships between different
-imaging contrasts are nonlinear and spatially- and tissue-dependent
-\cite{Vymazal1995-zo}. This poses several difficulties in the interpretation of
-multi-modal MRI. For example, analysis that requires accurate registration of
-images into the same coordinate frame currently requires the use of algorithms
-that can match images with different contrasts \cite{Klein2009-gq}. While this
-often works well, these algorithms can be over-sensitive to large, prominent
-features, such as edges of the tissue, and are more error-prone when images
-have low SNR, or represent very different features. Moreover, a better
-understanding of complementary information provided in different contrasts will
-allow better characterization of tissue properties.
+MRI creates images that are sensitive to different aspects of the tissue,
+and susceptible to different imaging artifacts. The relationships between
+different imaging contrasts are nonlinear and spatially- and
+tissue-dependent \cite{Vymazal1995-zo}. This poses several difficulties
+in the interpretation of multi-modal MRI. For example, analysis that
+requires accurate registration of images into the same coordinate frame
+currently requires the use of algorithms that can match images with
+different contrasts \cite{Klein2009-gq}. Moreover, a better understanding
+of complementary information provided in different contrasts will allow
+better characterization of tissue properties.
 
 \rule{\linewidth}{0.4pt}
 
@@ -100,8 +98,17 @@ allow better characterization of tissue properties.
 \normalsize
 \section*{Materials and Methods}
 
-We used the IXI dataset (\url{http://brain-development.org/ixi-dataset/}): T1w, T2w, PD, MRA, and DWI (16 directions, at b-value of 1000, one b=0) for N=567 subjects are available. A convolutional neural network was trained to learn the mapping between different MRI images in a training set (n=338).  We used a U-net architecture \cite{Ronneberger2015-ua}, with loss evaluated on “perceptual loss” \cite{Johnson2016-ac}: the activation of the first layer of a pretrained VGG16 network \cite{Simonyan2014-ua}, a  cost function that induces image similarity and prevents over-smoothing. Training used the Adam optimizer (learning rate: 0.0002). The implementation used Pytorch (https://pytorch.org).
-A group of participants (n=79), set aside as a test set (not shown to the algorithm during training) was used to evaluate registration. We used a state-of-the-art registration algorithm \cite{Avants2008-sa}, implemented in DIPY \cite{Garyfallidis2014-el} to register DWI b=0 to corresponding T1w images, using a mutual information metric to find the best affine transformation for registration. To simulate participant motion, known rotation and translation were applied to the b=0 image and the T1w was registered to the b=0. For comparison, we also synthesized a T1w-analog from the b=0 image using the DL network and used the synthesized image with the same registration algorithm. Registration errors were calculated relative to known ground truth as mean absolute error (MAE), for translation and rotation components of the registration.
+\subsection*{Data}
+We used the IXI dataset (\url{http://brain-development.org/ixi-dataset/}): T1w, T2w, PD, MRA, and DWI (16 directions, at b-value of 1000, one b=0) for N=567 subjects are available.
+
+\subsection*{Artificial neural networks}
+
+A fully convolutional neural network was trained to learn the mapping
+between different MRI images in a training set (n=338).  We used a U-net
+architecture \cite{Ronneberger2015-ua}. In all cases, we used the Adam
+optimizer for training (with learning rate: 0.0002). The implementation
+used Pytorch (https://pytorch.org).
+
 
 \begin{minipage}[b]{\linewidth}
 \includegraphics[width=\linewidth]{fully-convolutional.png}
@@ -109,6 +116,12 @@ A group of participants (n=79), set aside as a test set (not shown to the algori
 \end{minipage}
 \\
 
+
+\subsubsection*{Neural network architecures}
+
+We used both the standard U-Net architecture, as well as a generative
+adverserial architecture for image-to-image translation
+\cite{Isola2016-oc}.
 
 \begin{minipage}[b]{\linewidth}
 \begin{minipage}[b]{0.45\linewidth}
@@ -123,13 +136,31 @@ A group of participants (n=79), set aside as a test set (not shown to the algori
 \end{minipage}
 \\
 
+\subsubsection*{Neural network loss}
+
+We used two types of loss functions: the first is a pixel-wise L1 loss.
+We also used a “perceptual loss” function \cite{Johnson2016-ac}: the
+activation of the first layer of a pretrained VGG16 network
+\cite{Simonyan2014-ua}. The latter a cost function that induces image
+similarity and prevents over-smoothing.
 
 \begin{minipage}[b]{\linewidth}
-\includegraphics[width=\linewidth]{perceptual-loss.png}
-\center Perceptual loss
-\end{minipage}
-\\
+    \includegraphics[width=0.8\linewidth]{perceptual-loss.png}
+    \center Perceptual loss
+    \end{minipage}
+    \\
 
+\subsection*{Multi-modal registration experiments}
+A group of participants (n=79), set aside as a test set was used to
+evaluate registration. We used a state-of-the-art registration algorithm
+\cite{Avants2008-sa}, implemented in DIPY \cite{Garyfallidis2014-el} to
+register DWI b=0 to corresponding T1w images. To simulate participant
+motion, known rotation and translation were applied to the b=0 image and
+the T1w was registered to the b=0. For comparison, we also synthesized a
+T1w-analog from the b=0 image using the DL network and used the
+synthesized image with the same registration algorithm. Registration
+errors were calculated relative to known ground truth as mean absolute
+error (MAE), for translation and rotation components of the registration.
 
 %----------------------------------------------------------------------------%	ACKNOWLEDGEMENTS
 %----------------------------------------------------------------------------
@@ -171,7 +202,7 @@ The algorithm was trained to synthesize T1w images from the DWI b=0 images. On a
 \section*{Other applications}
 
 \begin{minipage}[t]{1\linewidth}
-\includegraphics[width=0.7\linewidth]{octa.png}
+\includegraphics[width=0.6\linewidth]{octa.png}
 \\
 AI-synthesized retinal perfusion images in patients with diseases that were not part of the training set.
 \end{minipage}
@@ -181,16 +212,11 @@ AI-synthesized retinal perfusion images in patients with diseases that were not 
 
 \section*{Conclusions}
 
-\large
 \begin{itemize}
-
+\large
 \item \texttt{MRI2MRI} accurately transforms between brain MRI contrasts
 
 \item This can be used to improve hard image processing tasks, such as cross-modal registration
-
-\item Does this discover physical properties of the tissue?
-
-\item Useful in other biomedical imaging data: OCTA, histology, ...
 
 \end{itemize}
 
@@ -202,7 +228,6 @@ AI-synthesized retinal perfusion images in patients with diseases that were not 
 \nocite{*} % Print all references regardless of whether they were cited in the poster or not
 \bibliographystyle{plain} % Plain referencing style
 \footnotesize \bibliography{poster} % Use the example bibliography file sample.bib
-
 
 %----------------------------------------------------------------------------
 
